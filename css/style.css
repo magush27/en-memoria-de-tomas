@@ -72,8 +72,8 @@ img { max-width: 100%; display: block; }
 
 .entry-bg::after {
   inset: 0;
-  background-size: contain;
-  background-position: center;
+  background-size: cover;
+  background-position: center 40%;
   filter: brightness(0.9) saturate(0.85) sepia(0.08);
 }
 
