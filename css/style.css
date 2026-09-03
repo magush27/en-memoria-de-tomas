@@ -1,13 +1,14 @@
 :root {
   --bg-light: #faf4ec;
   --bg-light-2: #f1e0cf;
-  --terracotta: #c17f5f;
-  --gold: #bb8f5c;
-  --gold-soft: #9c7248;
-  --gold-dark: #6b4a2a;
+  --rose: #d9a79c;
+  --rose-deep: #a8654f;
+  --white: #fdf8f4;
+  --white-muted: rgba(253, 248, 244, 0.82);
   --text: #4a372c;
   --muted: #7c6a5b;
-  --glow: #fff6ea;
+  --scrim-1: rgba(26, 20, 20, 0.16);
+  --scrim-2: rgba(26, 20, 20, 0.62);
   --serif: 'Cormorant Garamond', Georgia, serif;
   --display: 'Marcellus', Georgia, serif;
 }
@@ -50,17 +51,36 @@ img { max-width: 100%; display: block; }
 .entry-bg {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+}
+
+.entry-bg::before,
+.entry-bg::after {
+  content: '';
+  position: absolute;
   background-image: url('../fotos/1.jpeg');
+  background-repeat: no-repeat;
+}
+
+.entry-bg::before {
+  inset: -30px;
   background-size: cover;
-  background-position: center 20%;
-  filter: brightness(0.92) saturate(0.95) sepia(0.08);
-  transform: scale(1.03);
+  background-position: center;
+  filter: brightness(0.5) saturate(0.7) sepia(0.1) hue-rotate(-8deg) blur(30px);
+  transform: scale(1.15);
+}
+
+.entry-bg::after {
+  inset: 0;
+  background-size: contain;
+  background-position: center;
+  filter: brightness(0.9) saturate(0.85) sepia(0.08);
 }
 
 .entry-veil {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(250,244,236,.16) 0%, rgba(241,224,207,.5) 100%);
+  background: linear-gradient(180deg, var(--scrim-1) 0%, var(--scrim-2) 100%);
 }
 
 .entry-content {
@@ -77,10 +97,9 @@ img { max-width: 100%; display: block; }
   font-size: 1.05rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold-dark);
+  color: var(--rose);
   margin: 0 0 1.4rem;
-  -webkit-text-stroke: 0.35px currentColor;
-  text-shadow: 0 1px 3px rgba(255,246,234,.95), 0 2px 16px rgba(255,246,234,.95);
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 
 .entry-name {
@@ -89,19 +108,18 @@ img { max-width: 100%; display: block; }
   font-size: clamp(3rem, 8.5vw, 4.4rem);
   line-height: 1.15;
   margin: 0 0 1rem;
-  color: var(--text);
+  color: var(--white);
   letter-spacing: 0.01em;
-  -webkit-text-stroke: 0.6px currentColor;
-  text-shadow: 0 1px 3px rgba(255,246,234,.95), 0 2px 22px rgba(255,246,234,.95);
+  text-shadow: 0 2px 18px rgba(0,0,0,.4);
 }
 
 .entry-dates {
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--muted);
+  color: var(--white-muted);
   letter-spacing: 0.04em;
   margin: 0 0 2.6rem;
-  text-shadow: 0 1px 3px rgba(255,246,234,.95), 0 2px 16px rgba(255,246,234,.95);
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 
 .enter-btn {
@@ -109,27 +127,26 @@ img { max-width: 100%; display: block; }
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: rgba(255, 246, 234, 0.75);
-  backdrop-filter: blur(4px);
+  background: var(--rose);
   border: none;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  color: var(--gold-dark);
+  color: var(--white);
   font-family: var(--display);
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.16em;
-  -webkit-text-stroke: 0.3px currentColor;
   text-transform: uppercase;
+  box-shadow: 0 4px 22px rgba(0,0,0,.25);
 }
 
 .enter-btn-ring {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 1px solid rgba(193, 127, 95, 0.55);
+  border: 1px solid rgba(253, 248, 244, 0.55);
   animation: pulse-ring 2.6s ease-out infinite;
 }
 
@@ -141,7 +158,7 @@ img { max-width: 100%; display: block; }
 
 .enter-btn-label { position: relative; z-index: 1; }
 
-.enter-btn:hover .enter-btn-label { color: var(--text); }
+.enter-btn:hover .enter-btn-label { color: var(--white-muted); }
 
 /* ---------- Fixed photo background ---------- */
 
@@ -155,15 +172,19 @@ img { max-width: 100%; display: block; }
 .bg-layer {
   position: absolute;
   inset: 0;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  background-position: left center;
+  background-position: center;
   background-color: var(--bg-light);
   opacity: 0;
   transition: opacity 1.4s ease;
 }
 
 .bg-layer.active { opacity: 1; }
+
+.bg-layer:not(.bg-plain) {
+  filter: brightness(0.86) saturate(0.82) sepia(0.1) hue-rotate(-8deg);
+}
 
 .bg-plain {
   background: radial-gradient(circle at 50% 30%, var(--bg-light-2), var(--bg-light) 75%);
@@ -172,6 +193,11 @@ img { max-width: 100%; display: block; }
 .bg-scrim {
   position: absolute;
   inset: 0;
+  background: linear-gradient(180deg, var(--scrim-1) 0%, var(--scrim-2) 100%);
+}
+
+/* Over the plain (photo-less) background, keep a light scrim so the dark text there stays legible */
+.bg-plain.active ~ .bg-scrim {
   background: linear-gradient(180deg, rgba(250,244,236,.12) 0%, rgba(241,224,207,.5) 100%);
 }
 
@@ -185,10 +211,10 @@ img { max-width: 100%; display: block; }
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  border: 1px solid rgba(193, 127, 95, 0.4);
-  background: rgba(255, 246, 234, 0.75);
-  backdrop-filter: blur(6px);
-  color: var(--gold-dark);
+  border: none;
+  background: var(--rose);
+  box-shadow: 0 4px 16px rgba(0,0,0,.25);
+  color: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -227,10 +253,9 @@ main { position: relative; z-index: 1; }
   font-size: 1.05rem;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold-dark);
+  color: var(--rose);
   margin: 0 0 1.2rem;
-  -webkit-text-stroke: 0.3px currentColor;
-  text-shadow: 0 1px 3px rgba(255,246,234,.95), 0 2px 16px rgba(255,246,234,.95);
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 
 .name {
@@ -239,18 +264,17 @@ main { position: relative; z-index: 1; }
   font-size: clamp(2.5rem, 7.5vw, 4.8rem);
   margin: 0 0 1rem;
   letter-spacing: 0.01em;
-  color: var(--text);
-  -webkit-text-stroke: 0.6px currentColor;
-  text-shadow: 0 1px 3px rgba(255,246,234,.95), 0 2px 22px rgba(255,246,234,.95);
+  color: var(--white);
+  text-shadow: 0 2px 18px rgba(0,0,0,.4);
 }
 
 .dates {
   font-size: 1.26rem;
   font-weight: 600;
-  color: var(--muted);
+  color: var(--white-muted);
   letter-spacing: 0.04em;
   margin: 0 0 2.6rem;
-  text-shadow: 0 1px 3px rgba(255,246,234,.95), 0 2px 16px rgba(255,246,234,.95);
+  text-shadow: 0 2px 10px rgba(0,0,0,.35);
 }
 
 .quote {
@@ -258,15 +282,21 @@ main { position: relative; z-index: 1; }
   font-weight: 600;
   font-size: clamp(1.4rem, 3vw, 1.75rem);
   line-height: 1.6;
-  color: var(--text);
+  color: var(--white);
   max-width: 34rem;
   margin: 0;
-  text-shadow: 0 1px 3px rgba(255,246,234,.95), 0 2px 18px rgba(255,246,234,.95);
+  text-shadow: 0 2px 14px rgba(0,0,0,.4);
 }
 
 .quote.large {
   font-size: clamp(1.7rem, 4vw, 2.5rem);
   line-height: 1.55;
+}
+
+/* Over the plain background there's no photo to darken, so quotes go back to dark text */
+.panel[data-bg-target="plain"] .quote {
+  color: var(--text);
+  text-shadow: none;
 }
 
 .scroll-cue {
@@ -275,14 +305,14 @@ main { position: relative; z-index: 1; }
   flex-direction: column;
   align-items: center;
   gap: 0.7rem;
-  color: var(--muted);
+  color: var(--white-muted);
 }
 
 .scroll-cue-track {
   position: relative;
   width: 1px;
   height: 34px;
-  background: linear-gradient(180deg, rgba(193,127,95,.08), rgba(193,127,95,.6));
+  background: linear-gradient(180deg, rgba(253,248,244,.1), rgba(253,248,244,.7));
 }
 
 .scroll-cue-dot {
@@ -292,7 +322,7 @@ main { position: relative; z-index: 1; }
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: var(--terracotta);
+  background: var(--rose);
   transform: translateX(-50%);
   animation: scroll-travel 1.9s ease-in-out infinite;
 }
@@ -303,7 +333,8 @@ main { position: relative; z-index: 1; }
   font-size: 0.85rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--gold-dark);
+  color: var(--rose);
+  text-shadow: 0 2px 8px rgba(0,0,0,.35);
 }
 
 @keyframes scroll-travel {
@@ -345,16 +376,62 @@ main { position: relative; z-index: 1; }
   #panel-hero .name br {
     display: none;
   }
+
+  /* Text sits in the plain right-hand column here, not on top of the photo,
+     so it keeps the light-background treatment instead of the on-photo one. */
+  .bg-scrim {
+    background: linear-gradient(180deg, rgba(250,244,236,.12) 0%, rgba(241,224,207,.5) 100%);
+  }
+
+  .panel[data-bg-target="1"] .eyebrow,
+  .panel[data-bg-target="2"] .eyebrow,
+  .panel[data-bg-target="3"] .eyebrow,
+  .panel[data-bg-target="4"] .eyebrow {
+    color: var(--rose-deep);
+    text-shadow: none;
+  }
+
+  .panel[data-bg-target="1"] .name,
+  .panel[data-bg-target="2"] .name,
+  .panel[data-bg-target="3"] .name,
+  .panel[data-bg-target="4"] .name {
+    color: var(--text);
+    text-shadow: none;
+  }
+
+  .panel[data-bg-target="1"] .dates,
+  .panel[data-bg-target="2"] .dates,
+  .panel[data-bg-target="3"] .dates,
+  .panel[data-bg-target="4"] .dates {
+    color: var(--muted);
+    text-shadow: none;
+  }
+
+  .panel[data-bg-target="1"] .quote,
+  .panel[data-bg-target="2"] .quote,
+  .panel[data-bg-target="3"] .quote,
+  .panel[data-bg-target="4"] .quote {
+    color: var(--text);
+    text-shadow: none;
+  }
+
+  .panel[data-bg-target="1"] .scroll-cue {
+    color: var(--muted);
+  }
+
+  .panel[data-bg-target="1"] .scroll-cue-track {
+    background: linear-gradient(180deg, rgba(168,101,79,.08), rgba(168,101,79,.6));
+  }
+
+  .panel[data-bg-target="1"] .scroll-cue-label {
+    color: var(--rose-deep);
+    text-shadow: none;
+  }
 }
 
 /* Small screens: photo fills the whole background, text sits near the top */
 
 @media (max-width: 700px) {
-  .bg-layer:not(.bg-plain) {
-    background-size: cover;
-    background-position: center;
-  }
-
   .panel[data-bg-target="1"],
   .panel[data-bg-target="2"],
   .panel[data-bg-target="3"],
@@ -380,7 +457,7 @@ main { position: relative; z-index: 1; }
   }
 
   .bg-scrim {
-    background: linear-gradient(180deg, rgba(250,244,236,.18) 0%, rgba(241,224,207,.55) 100%);
+    background: linear-gradient(180deg, var(--scrim-1) 0%, var(--scrim-2) 60%, rgba(26,20,20,.72) 100%);
   }
 }
 
@@ -395,7 +472,7 @@ main { position: relative; z-index: 1; }
 
 .panel-card .card {
   background: rgba(255, 250, 242, 0.65);
-  border: 1px solid rgba(193, 127, 95, 0.3);
+  border: 1px solid rgba(217, 167, 156, 0.4);
   backdrop-filter: blur(8px);
   border-radius: 4px;
   padding: 3.2rem 2.6rem;
@@ -427,6 +504,6 @@ main { position: relative; z-index: 1; }
 .footer-signature {
   font-family: var(--display);
   font-size: 1.6rem;
-  color: var(--gold-dark);
+  color: var(--rose-deep);
   margin: 0;
 }
