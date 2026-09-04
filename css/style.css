@@ -104,7 +104,7 @@ img { max-width: 100%; display: block; }
 
 .entry-name {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(3rem, 8.5vw, 4.4rem);
   line-height: 1.15;
   margin: 0 0 1rem;
@@ -260,7 +260,7 @@ main { position: relative; z-index: 1; }
 
 .name {
   font-family: var(--display);
-  font-weight: 700;
+  font-weight: 400;
   font-size: clamp(2.5rem, 7.5vw, 4.8rem);
   margin: 0 0 1rem;
   letter-spacing: 0.01em;
@@ -279,7 +279,7 @@ main { position: relative; z-index: 1; }
 
 .quote {
   font-style: italic;
-  font-weight: 600;
+  font-weight: 400;
   font-size: clamp(1.4rem, 3vw, 1.75rem);
   line-height: 1.6;
   color: var(--white);
@@ -447,7 +447,7 @@ main { position: relative; z-index: 1; }
   }
 
   #panel-hero .quote {
-    font-size: 1.1rem;
+    font-size: 1.4rem;
     line-height: 1.4;
     margin-top: 0.6rem;
   }
